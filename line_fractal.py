@@ -9,31 +9,30 @@ pygame.init()
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-x = 800
-y = 600
-max_iterations = 16
-branch_angle = 15
-starter_line_size = 140  # 100, 140
-line_multiplier = 0.70   # 0.80, 0.70
-frames = 40
+x = 1100
+y = 1000
+max_iteration = 16
+left_angle = 20 * (math.pi / 180)
+# right_angle = 40 * (math.pi / 180)
+starter_line_size = 180  # 100, 140
+left_line_multiplier = 0.55   # 0.80, 0.70
+right_line_multiplier = 0.85
+y_position = 4/5
+frames = 60
 
 size = [x, y]
 window = pygame.display.set_mode(size)
 pygame.display.set_caption('Fractal Tree')
 
 
-def draw_lines(angle, decrease, point, length, length_multiplier, max_iteration, iterations=1):
-    if iterations == 1:
-        angle = math.radians(angle)
-        decrease = math.radians(decrease)
-    finish_point = [point[0] - length * math.sin(angle - decrease), point[1] - length * math.cos(angle - decrease)]
+def draw_lines(point, length, iterations=1, branch_angle=0):
+    finish_point = [point[0] + length * math.sin(branch_angle),
+                    point[1] - length * math.cos(branch_angle)]
     pygame.draw.line(window, BLACK, point, finish_point, 1)
     if iterations < max_iteration:
         iterations += 1
-        draw_lines(angle, decrease - angle, finish_point, length * length_multiplier, length_multiplier,
-                   max_iteration, iterations)
-        draw_lines(angle, decrease + angle, finish_point, length * length_multiplier, length_multiplier,
-                   max_iteration, iterations)
+        draw_lines(finish_point, length * left_line_multiplier,  iterations, branch_angle=branch_angle - left_angle)
+        draw_lines(finish_point, length * right_line_multiplier,  iterations, branch_angle=branch_angle + right_angle)
 
 
 done = False
@@ -44,11 +43,20 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-    window.fill(WHITE)
-    for i in range(max_iterations):
-        draw_lines(branch_angle, branch_angle, [x/2, y], starter_line_size, line_multiplier, i)
+
+    # for i_max_iteration in range(max_iteration):
+    #     window.fill(WHITE)
+    #     draw_lines([x/2, y*4/5], starter_line_size)
+    #     pygame.display.flip()
+    #     clock.tick(frames)
+    # clock.tick(2)
+
+    for i in range(360):
+        window.fill(WHITE)
+        right_angle = i * (math.pi / 180)
+        draw_lines([x / 2, y*y_position], starter_line_size)
         pygame.display.flip()
         clock.tick(frames)
-    clock.tick(2)
+
 
 pygame.quit()
