@@ -1,7 +1,7 @@
 import pygame
 
 p0 = 0.02
-r = 4
+r = 3.9
 i = 900
 clock = pygame.time.Clock()
 
