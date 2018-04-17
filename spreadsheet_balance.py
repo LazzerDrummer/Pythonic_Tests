@@ -9,6 +9,22 @@ client = gspread.authorize(creds)
 
 pp = pprint.PrettyPrinter()
 sheet = client.open('Balance').sheet1
-result = sheet.get_all_values()
+pp.pprint(sheet.row_values(3))
 
-pp.pprint(result)
+
+def change_order(first_row, last_row):
+    for i in range(first_row, last_row + 1):
+        values_last_row = sheet.row_values(last_row)
+        sheet.insert_row(values_last_row, i)
+        sheet.delete_row(last_row + 1)
+
+
+class Person:
+    def __init__(self, name, column_index, latest_value):
+        self.name = name
+        self.column_index = column_index
+        self.latest_value = latest_value
+
+
+cipi = Person("Cipi", 1, 0)
+stefan = Person("Stefan", 2, 0)
