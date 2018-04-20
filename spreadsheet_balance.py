@@ -11,20 +11,21 @@ client = gspread.authorize(creds)
 
 pp = pprint.PrettyPrinter()
 sheet = client.open('Balance').sheet1
-# def change_order(first_row, last_row):
-# for i in range(first_row, last_row + 1):
-# values_last_row = sheet.row_values(last_row)
-# sheet.insert_row(values_last_row, i)
-# sheet.delete_row(last_row + 1)
 
 
-def get_names(self):
+def get_names():
     pp.pprint(sheet.row_values(1))
 
 
+def get_balances():
+    # pp.pprint(sheet.range(2, 2, 2, sheet.col_count))
+    for j in range(2, sheet.col_count + 1):
+        for i in range(1, 3):
+            print(sheet.cell(i, j).value, end=" ")
+        print()
+
+
 class Balance:
-    # import gspread
-    # new_person = False
 
     def __init__(self, name):
         self.name = name
@@ -43,25 +44,11 @@ class Balance:
                 self.len_this_col = len(sheet.col_values(self.column_index))
                 self.new_person = True
         if not self.new_person:
-            print('yay1')
             sheet.add_cols(1)
             self.column_index = sheet.col_count + 1
             sheet.update_cell(1, self.column_index, name)
             self.latest_value = 0
             self.len_this_col = 0
-        # if name not in sheet.row_values(1):
-        #     if(sheet.col_count < column_index):
-        #         sheet.add_cols(1)
-        #         sheet.update_cell(1, column_index, name)
-        #         self.latest_value = 0
-        #         self.len_this_col = 0
-        #     else:
-        #         print("This column is already in use")
-        # else:
-        #     print("This name is already used")
-        #     self.column_index = col
-        #     self.latest_value = int(sheet.cell(2, column_index).value)
-        #     self.len_this_col = len(sheet.col_values(self.column_index))
 
     def update_lastest_value(self):
         if sheet.cell(2, self.column_index).value is not "":
@@ -84,7 +71,8 @@ class Balance:
         self.update_lastest_value()
 
     def nullify(self):
-        self.insert_cell(0)
+        if self.latest_value != 0:
+            self.insert_cell(0)
 
     def delete_latest_cell(self):
         if self.len_this_col != 1:
@@ -96,27 +84,27 @@ class Balance:
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2 or len(sys.argv) > 5:
+    if len(sys.argv) == 1 or len(sys.argv) > 5:
         print('Type "python spreadsheet_balance help" to understand what you '
               + 'can do with this program')
         print('usage: python spreadsheet_balance.py (function) '
               + '(argument1) ' + '(argument2)')
         sys.exit(1)
-    elif sys.argv[1] == 'change_balance':
+    elif sys.argv[1] == 'change-balance':
         if len(sys.argv) != 4:
             print('[insert function help here]')
             sys.exit(1)
         else:
             person = Balance(sys.argv[2])
             person.change_balance(int(sys.argv[3]))
-    elif sys.argv[1] == 'delete_latest_cell':
+    elif sys.argv[1] == 'delete-latest-cell':
         if len(sys.argv) != 3:
             print('[insert function help here]')
             sys.exit(1)
         else:
             person = Balance(sys.argv[2])
             person.delete_latest_cell()
-    elif sys.argv[1] == 'add_person':
+    elif sys.argv[1] == 'add-person':
         if len(sys.argv) != 3:
             print('[insert function help here]')
             sys.exit(1)
@@ -125,3 +113,22 @@ if __name__ == '__main__':
             if person.new_person:
                 print('[insert function help here]')
                 sys.exit(1)
+    elif sys.argv[1] == 'nullify':
+        if len(sys.argv) != 3:
+            print('[insert function help here]')
+            sys.exit(1)
+        else:
+            person = Balance(sys.argv[2])
+            person.nullify()
+    elif sys.argv[1] == 'get-names':
+        if len(sys.argv) != 2:
+            print('[insert function help here]')
+            sys.exit(1)
+        else:
+            get_names()
+    elif sys.argv[1] == 'get-balances':
+        if len(sys.argv) != 2:
+            print('[insert function help here]')
+            sys.exit(1)
+        else:
+            get_balances()
