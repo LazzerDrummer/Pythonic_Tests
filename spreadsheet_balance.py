@@ -1,6 +1,7 @@
 import sys
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from inspect import signature
 import pprint
 
 
@@ -87,48 +88,54 @@ if __name__ == '__main__':
     if len(sys.argv) == 1 or len(sys.argv) > 5:
         print('Type "python spreadsheet_balance help" to understand what you '
               + 'can do with this program')
-        print('usage: python spreadsheet_balance.py (function) '
-              + '(argument1) ' + '(argument2)')
         sys.exit(1)
-    elif sys.argv[1] == 'change-balance':
-        if len(sys.argv) != 4:
-            print('[insert function help here]')
-            sys.exit(1)
-        else:
-            person = Balance(sys.argv[2])
-            person.change_balance(int(sys.argv[3]))
-    elif sys.argv[1] == 'delete-latest-cell':
-        if len(sys.argv) != 3:
-            print('[insert function help here]')
-            sys.exit(1)
-        else:
-            person = Balance(sys.argv[2])
-            person.delete_latest_cell()
-    elif sys.argv[1] == 'add-person':
-        if len(sys.argv) != 3:
-            print('[insert function help here]')
-            sys.exit(1)
-        else:
-            person = Balance(sys.argv[2])
-            if person.new_person:
-                print('[insert function help here]')
-                sys.exit(1)
-    elif sys.argv[1] == 'nullify':
-        if len(sys.argv) != 3:
-            print('[insert function help here]')
-            sys.exit(1)
-        else:
-            person = Balance(sys.argv[2])
-            person.nullify()
-    elif sys.argv[1] == 'get-names':
-        if len(sys.argv) != 2:
-            print('[insert function help here]')
-            sys.exit(1)
-        else:
-            get_names()
-    elif sys.argv[1] == 'get-balances':
-        if len(sys.argv) != 2:
-            print('[insert function help here]')
-            sys.exit(1)
-        else:
-            get_balances()
+    else:
+        if hasattr(Balance, sys.argv[1]):
+            if callable(getattr(Balance, sys.argv[1])):
+                if len(sys.argv) == 3:
+                    print('yay1')
+                    person = Balance(sys.argv[2])
+                    method = getattr(person, sys.argv[1])
+                    method()
+                # elif sys.argv[1] == 'change-balance':
+                #     if len(sys.argv) != 4:
+                #         print('[insert function help here]')
+                #         sys.exit(1)
+                #     else:
+                #         person = Balance(sys.argv[2])
+                #         person.change_balance(int(sys.argv[3]))
+                # elif sys.argv[1] == 'delete-latest-cell':
+                #     if len(sys.argv) != 3:
+                #         print('[insert function help here]')
+                #         sys.exit(1)
+                #     else:
+                #         person = Balance(sys.argv[2])
+                #         person.delete_latest_cell()
+                # elif sys.argv[1] == 'add-person':
+                #     if len(sys.argv) != 3:
+                #         print('[insert function help here]')
+                #         sys.exit(1)
+                #     else:
+                #         person = Balance(sys.argv[2])
+                #         if person.new_person:
+                #             print('[insert function help here]')
+                #             sys.exit(1)
+                # elif sys.argv[1] == 'nullify':
+                #     if len(sys.argv) != 3:
+                #         print('[insert function help here]')
+                #         sys.exit(1)
+                #     else:
+                #         person = Balance(sys.argv[2])
+                #         person.nullify()
+                # elif sys.argv[1] == 'get-names':
+                #     if len(sys.argv) != 2:
+                #         print('[insert function help here]')
+                #         sys.exit(1)
+                #     else:
+                #         get_names()
+                # elif sys.argv[1] == 'get-balances':
+                #     if len(sys.argv) != 2:
+                #         print('[insert function help here]')
+                #         sys.exit(1)
+                #     else:
+                #         get_balances()
