@@ -1,12 +1,12 @@
 
-def quick_sort(arr):
+def quick_sort(list):
     less = []
     pivot_list = []
     more = []
-    if len(arr) <= 1:
-        return arr
-    for num in arr:
-        pivot = arr[0]
+    if len(list) <= 1:
+        return list
+    for num in list:
+        pivot = list[0]
         if num < pivot:
             less.append(num)
         elif num > pivot:
@@ -18,5 +18,6 @@ def quick_sort(arr):
     return less + pivot_list + more
 
 
-a = [1, 3, 7, 2, 4, 9]
-print(quick_sort(a))
+A = [2000, 8, 1, 4, 14, 7, 16, 10, 9, 3]
+B = quick_sort(A)
+print(B)
