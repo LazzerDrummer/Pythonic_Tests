@@ -15,6 +15,7 @@ sheet = client.open('Debt').sheet1
 
 rows = sheet.row_count
 cols = sheet.col_count
+
 values_last_row = sheet.row_values(rows)
 
 
@@ -32,8 +33,8 @@ def get_debts():
 def check_last_row_null():
     for value in values_last_row:
         if value is not "":
-            return True
-    return False
+            return False
+    return True
 
 
 class Debt:
@@ -98,7 +99,7 @@ class Debt:
                 sheet.update_cell(i - 1, self.column_index, current_cell)
             sheet.update_cell(self.len_this_col, self.column_index, "")
             self.update_latest_value()
-            if check_last_row_null:
+            if check_last_row_null():
                 sheet.delete_row(rows)
 
     def get_debt(self):
