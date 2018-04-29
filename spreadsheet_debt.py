@@ -16,6 +16,10 @@ sheet = client.open('Debt').sheet1
 rows = sheet.row_count
 cols = sheet.col_count
 
+# print(cols)
+# print(rows)
+# sheet.cell(2, 7).value
+
 values_last_row = sheet.row_values(rows)
 
 
@@ -31,20 +35,26 @@ def get_debts():
 
 
 def check_last_row_null():
-    for value in values_last_row:
-        if value is not "":
-            return False
-    return True
+    # rows = sheet.row_count
+    values_last_row = sheet.row_values(rows)
+    if not values_last_row:
+        return True
+    else:
+        return False
 
 
 class Debt:
 
     def __init__(self, name):
         self.name = name
-        self.new_person = False
+        self.new_person = True
         iteration = 0
+        latest_empty_cell = 0
         for value in sheet.row_values(1):
             iteration += 1
+            if latest_empty_cell == 0 and value is "":
+                latest_empty_cell = iteration
+                continue
             if name == value:
                 self.column_index = iteration
                 if sheet.cell(2, self.column_index).value is not "":
@@ -53,10 +63,15 @@ class Debt:
                 else:
                     self.latest_value = 0
                 self.len_this_col = len(sheet.col_values(self.column_index))
-                self.new_person = True
-        if not self.new_person:
-            sheet.add_cols(1)
-            self.column_index = cols + 1
+                self.new_person = False
+        if cols > len(sheet.row_values(1)) and latest_empty_cell == 0:
+            latest_empty_cell = len(sheet.row_values(1)) + 1
+        if self.new_person:
+            if latest_empty_cell == 0:
+                sheet.add_cols(1)
+                self.column_index = cols + 1
+            else:
+                self.column_index = latest_empty_cell
             sheet.update_cell(1, self.column_index, name)
             self.latest_value = 0
             self.len_this_col = 0
@@ -99,8 +114,9 @@ class Debt:
                 sheet.update_cell(i - 1, self.column_index, current_cell)
             sheet.update_cell(self.len_this_col, self.column_index, "")
             self.update_latest_value()
-            if check_last_row_null():
-                sheet.delete_row(rows)
+        if check_last_row_null():
+            rows = sheet.row_count
+            sheet.delete_row(rows)
 
     def get_debt(self):
         print(self.latest_value)
