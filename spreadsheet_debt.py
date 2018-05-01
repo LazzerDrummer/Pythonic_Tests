@@ -86,9 +86,12 @@ class Debt:
     def insert_cell(self, value):
         if sheet.cell(rows, self.column_index).value is not "":
             sheet.add_rows(1)
-        for i in range(self.len_this_col, 1, -1):
-            current_cell = sheet.cell(i, self.column_index).value
-            sheet.update_cell(i + 1, self.column_index, current_cell)
+        cell_range = sheet.range(2, self.column_index,
+                                 self.len_this_col + 1, self.column_index)
+        for i in range(self.len_this_col - 2, -1, -1):
+                current_cell = cell_range[i].value
+                cell_range[i+1].value = int(current_cell)
+        sheet.update_cells(cell_range)
         sheet.update_cell(2, self.column_index, value)
 
     def change_debt(self, money_value):
@@ -109,9 +112,12 @@ class Debt:
 
     def delete_latest_cell(self):
         if self.len_this_col != 1:
-            for i in range(3, self.len_this_col + 1):
-                current_cell = sheet.cell(i, self.column_index).value
-                sheet.update_cell(i - 1, self.column_index, current_cell)
+            cell_range = sheet.range(2, self.column_index,
+                                     self.len_this_col, self.column_index)
+            for i in range(0, self.len_this_col - 2):
+                current_cell = cell_range[i+1].value
+                cell_range[i].value = int(current_cell)
+            sheet.update_cells(cell_range)
             sheet.update_cell(self.len_this_col, self.column_index, "")
             self.update_latest_value()
         if check_last_row_null():
