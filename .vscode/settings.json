@@ -1,0 +1,11 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.linting.pep8Enabled": false,
+    "editor.fontFamily": "Source Code Pro",
+    "files.autoSave": "afterDelay",
+    "editor.fontSize": 14,
+    "files.autoSaveDelay": 500,
+    //"editor.mouseWheelZoom": true
+}
