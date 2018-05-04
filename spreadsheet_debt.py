@@ -15,32 +15,7 @@ sheet = client.open('Debt').sheet1
 
 rows = sheet.row_count
 cols = sheet.col_count
-
-# print(cols)
-# print(rows)
-# sheet.cell(2, 7).value
-
 values_last_row = sheet.row_values(rows)
-
-
-def get_names():
-    pp.pprint(sheet.row_values(1))
-
-
-def get_debts():
-    for j in range(2, cols + 1):
-        for i in range(1, 3):
-            print(sheet.cell(i, j).value, end=" ")
-        print()
-
-
-def check_last_row_null():
-    # rows = sheet.row_count
-    values_last_row = sheet.row_values(rows)
-    if not values_last_row:
-        return True
-    else:
-        return False
 
 
 class Debt:
@@ -86,12 +61,12 @@ class Debt:
     def insert_cell(self, value):
         if sheet.cell(rows, self.column_index).value is not "":
             sheet.add_rows(1)
-        cell_range = sheet.range(2, self.column_index,
-                                 self.len_this_col + 1, self.column_index)
+        cell_list = sheet.range(2, self.column_index,
+                                self.len_this_col + 1, self.column_index)
         for i in range(self.len_this_col - 2, -1, -1):
-                current_cell = cell_range[i].value
-                cell_range[i+1].value = int(current_cell)
-        sheet.update_cells(cell_range)
+            current_cell = cell_list[i].value
+            cell_list[i+1].value = int(current_cell)
+        sheet.update_cells(cell_list)
         sheet.update_cell(2, self.column_index, value)
 
     def change_debt(self, money_value):
@@ -110,19 +85,39 @@ class Debt:
         if self.latest_value != 0:
             self.insert_cell(0)
 
+    @staticmethod
+    def check_last_row_null():
+        # rows = sheet.row_count
+        values_last_row = sheet.row_values(rows)
+        if not values_last_row:
+            return True
+        else:
+            return False
+
     def delete_latest_cell(self):
         if self.len_this_col != 1:
-            cell_range = sheet.range(2, self.column_index,
-                                     self.len_this_col, self.column_index)
+            cell_list = sheet.range(2, self.column_index,
+                                    self.len_this_col, self.column_index)
             for i in range(0, self.len_this_col - 2):
-                current_cell = cell_range[i+1].value
-                cell_range[i].value = int(current_cell)
-            sheet.update_cells(cell_range)
+                current_cell = cell_list[i+1].value
+                cell_list[i].value = int(current_cell)
+            sheet.update_cells(cell_list)
             sheet.update_cell(self.len_this_col, self.column_index, "")
             self.update_latest_value()
-        if check_last_row_null():
+        if self.check_last_row_null():
             rows = sheet.row_count
             sheet.delete_row(rows)
+
+    @staticmethod
+    def get_names():
+        pp.pprint(sheet.row_values(1))
+
+    @staticmethod
+    def get_debts():
+        for j in range(2, cols + 1):
+            for i in range(1, 3):
+                print(sheet.cell(i, j).value, end=" ")
+            print()
 
     def get_debt(self):
         print(self.latest_value)
@@ -138,14 +133,14 @@ if __name__ == '__main__':
             if callable(getattr(Debt, sys.argv[1])):
                 if(len(sys.argv) >= 3):
                     person = Debt(sys.argv[2])
+                    method = getattr(person, sys.argv[1])
+                    difference = 3
                 else:
-                    print("This function requires a Debt object")
-                    print("more help here")
-                    sys.exit(1)
-                method = getattr(person, sys.argv[1])
+                    method = getattr(Debt, sys.argv[1])
+                    difference = 2
                 sig = signature(method)
                 params = sig.parameters
-                if(len(params) == len(sys.argv) - 3):
+                if(len(params) == len(sys.argv) - difference):
                     if len(params) == 0:
                         method()
                     elif len(params) == 1:
@@ -154,14 +149,5 @@ if __name__ == '__main__':
                     print("insert help here")
             else:
                 print("The Debt class does not have this function.")
-                sys.exit(1)
         else:
-            if len(sys.argv) == 2:
-                if sys.argv[1] == 'get_names':
-                    get_names()
-                elif sys.argv[1] == 'get_debts':
-                    get_debts()
-                else:
-                    print("This python program not have this function.")
-            else:
-                print("insert help here")
+            print("*The Debt class does not have this atribute.")

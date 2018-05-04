@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Spreadsheet get_names",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/spreadsheet_debt.py",
+            "args": [
+                "get_names"
+            ]
+        },
+        {
             "name": "Python: Spreadsheet change_debt Cipi",
             "type": "python",
             "request": "launch",
