@@ -20,6 +20,8 @@ values_last_row = sheet.row_values(rows)
 
 class Debt:
 
+    count_people = len(sheet.row_values(1))
+
     def __init__(self, name):
         self.name = name
         self.new_person = True
@@ -87,15 +89,13 @@ class Debt:
 
     @staticmethod
     def check_last_row_null():
-        # rows = sheet.row_count
-        values_last_row = sheet.row_values(rows)
-        if not values_last_row:
+        if not sheet.row_values(rows):
             return True
         else:
             return False
 
     def delete_latest_cell(self):
-        if self.len_this_col != 1:
+        if self.len_this_col < 3:
             cell_list = sheet.range(2, self.column_index,
                                     self.len_this_col, self.column_index)
             for i in range(0, self.len_this_col - 2):
@@ -104,6 +104,8 @@ class Debt:
             sheet.update_cells(cell_list)
             sheet.update_cell(self.len_this_col, self.column_index, "")
             self.update_latest_value()
+        else:
+            sheet.update_cell(2, self.column_index, 0)
         if self.check_last_row_null():
             rows = sheet.row_count
             sheet.delete_row(rows)
@@ -114,21 +116,30 @@ class Debt:
 
     @staticmethod
     def get_debts():
-        for j in range(2, cols + 1):
-            for i in range(1, 3):
-                print(sheet.cell(i, j).value, end=" ")
-            print()
+        cell_list = sheet.range(1, 1, 2, Debt.count_people)
+        for i in range(0, Debt.count_people):
+            print(cell_list[i].value, end=" ")
+            print(cell_list[i + Debt.count_people].value)
+
+    @staticmethod
+    def get_sum_of_debts():
+        sum = 0
+        for value in sheet.row_values(2):
+            sum += int(value)
+        print(sum)
 
     def get_debt(self):
         print(self.latest_value)
 
 
 if __name__ == '__main__':
+
     if len(sys.argv) == 1 or len(sys.argv) > 5:
         print('Type "python spreadsheet_debt help" to understand what you '
               + 'can do with this program')
         sys.exit(1)
     else:
+        attribute = getattr(Debt, sys.argv[1])
         if hasattr(Debt, sys.argv[1]):
             if callable(getattr(Debt, sys.argv[1])):
                 if(len(sys.argv) >= 3):
@@ -136,7 +147,7 @@ if __name__ == '__main__':
                     method = getattr(person, sys.argv[1])
                     difference = 3
                 else:
-                    method = getattr(Debt, sys.argv[1])
+                    method = attribute
                     difference = 2
                 sig = signature(method)
                 params = sig.parameters

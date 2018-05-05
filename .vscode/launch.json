@@ -14,14 +14,14 @@
             ]
         },
         {
-            "name": "Python: Spreadsheet change_debt Cipi",
+            "name": "Python: Spreadsheet change_debt",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/spreadsheet_debt.py",
             "args": [
                 "change_debt",
-                "Cipi",
-                "10"
+                "Stefan",
+                "2"
             ]
         },
         {
