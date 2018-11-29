@@ -86,7 +86,11 @@
             "module": "flask",
             "env": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "FLASK_APP": "app.py"
+=======
+                "FLASK_APP": "${workspaceFolder}/app.py"
+>>>>>>> cd5c02bd1eea3f0815dcd552839cc463d4acc704
 =======
                 "FLASK_APP": "${workspaceFolder}/app.py"
 >>>>>>> cd5c02bd1eea3f0815dcd552839cc463d4acc704
@@ -95,6 +99,7 @@
                 "run",
                 "--no-debugger",
                 "--no-reload"
+<<<<<<< HEAD
 <<<<<<< HEAD
             ],
             "jinja": true
@@ -106,6 +111,8 @@
             "program": "${file}",
             "console": "externalTerminal"
 =======
+=======
+>>>>>>> cd5c02bd1eea3f0815dcd552839cc463d4acc704
             ]
         },
         {
@@ -156,6 +163,9 @@
             "debugOptions": [
                 "RedirectOutput"
             ]
+<<<<<<< HEAD
+>>>>>>> cd5c02bd1eea3f0815dcd552839cc463d4acc704
+=======
 >>>>>>> cd5c02bd1eea3f0815dcd552839cc463d4acc704
         }
     ]
