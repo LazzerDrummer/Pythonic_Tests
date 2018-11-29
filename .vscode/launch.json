@@ -5,51 +5,97 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File (Integrated Terminal)",
+            "name": "Python: Spreadsheet get_names",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/spreadsheet_debt.py",
+            "args": [
+                "get_names"
+            ]
+        },
+        {
+            "name": "Python: Spreadsheet change_debt",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/spreadsheet_debt.py",
+            "args": [
+                "change_debt",
+                "Stefan",
+                "2"
+            ]
+        },
+        {
+            "name": "Python: Spreadsheet delete_latest_cell",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/spreadsheet_debt.py",
+            "args": [
+                "delete_latest_cell",
+                "Stefan",
+            ]
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}"
+        },
+        {
+            "name": "Python: Attach",
+            "type": "python",
+            "request": "attach",
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "${workspaceFolder}",
+            "port": 3000,
+            "secret": "my_secret",
+            "host": "localhost"
+        },
+        {
+            "name": "Python: Terminal (integrated)",
             "type": "python",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
         },
         {
-            "name": "Python: Attach",
-            "type": "python",
-            "request": "attach",
-            "port": 5678,
-            "host": "localhost"
-        },
-        {
-            "name": "Python: Module",
+            "name": "Python: Terminal (external)",
             "type": "python",
             "request": "launch",
-            "module": "enter-your-module-name-here",
-            "console": "integratedTerminal"
+            "program": "${file}",
+            "console": "externalTerminal"
         },
         {
             "name": "Python: Django",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
-            "console": "integratedTerminal",
             "args": [
                 "runserver",
                 "--noreload",
                 "--nothreading"
             ],
-            "django": true
+            "debugOptions": [
+                "RedirectOutput",
+                "Django"
+            ]
         },
         {
-            "name": "Python: Flask",
+            "name": "Python: Flask (0.11.x or later)",
             "type": "python",
             "request": "launch",
             "module": "flask",
             "env": {
+<<<<<<< HEAD
                 "FLASK_APP": "app.py"
+=======
+                "FLASK_APP": "${workspaceFolder}/app.py"
+>>>>>>> cd5c02bd1eea3f0815dcd552839cc463d4acc704
             },
             "args": [
                 "run",
                 "--no-debugger",
                 "--no-reload"
+<<<<<<< HEAD
             ],
             "jinja": true
         },
@@ -59,6 +105,58 @@
             "request": "launch",
             "program": "${file}",
             "console": "externalTerminal"
+=======
+            ]
+        },
+        {
+            "name": "Python: Module",
+            "type": "python",
+            "request": "launch",
+            "module": "module.name"
+        },
+        {
+            "name": "Python: Pyramid",
+            "type": "python",
+            "request": "launch",
+            "args": [
+                "${workspaceFolder}/development.ini"
+            ],
+            "debugOptions": [
+                "RedirectOutput",
+                "Pyramid"
+            ]
+        },
+        {
+            "name": "Python: Watson",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/console.py",
+            "args": [
+                "dev",
+                "runserver",
+                "--noreload=True"
+            ]
+        },
+        {
+            "name": "Python: All debug Options",
+            "type": "python",
+            "request": "launch",
+            "pythonPath": "${config:python.pythonPath}",
+            "program": "${file}",
+            "module": "module.name",
+            "env": {
+                "VAR1": "1",
+                "VAR2": "2"
+            },
+            "envFile": "${workspaceFolder}/.env",
+            "args": [
+                "arg1",
+                "arg2"
+            ],
+            "debugOptions": [
+                "RedirectOutput"
+            ]
+>>>>>>> cd5c02bd1eea3f0815dcd552839cc463d4acc704
         }
     ]
 }

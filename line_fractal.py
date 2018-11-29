@@ -32,8 +32,10 @@ def main():
         pygame.draw.line(window, black, point, finish_point, 1)
         if iterations < max_iteration:
             iterations += 1
-            draw_line(finish_point, length * left_line_multiplier, iterations, branch_angle=branch_angle - left_angle)
-            draw_line(finish_point, length * right_line_multiplier, iterations, branch_angle=branch_angle + right_angle)
+            draw_line(finish_point, length * left_line_multiplier,
+                      iterations, branch_angle=branch_angle - left_angle)
+            draw_line(finish_point, length * right_line_multiplier,
+                      iterations, branch_angle=branch_angle + right_angle)
 
     done = False
     clock = pygame.time.Clock()

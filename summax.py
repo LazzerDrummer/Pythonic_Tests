@@ -27,11 +27,13 @@ def reversed_string(a_string):
     return a_string[::-1]
 
 
-pyramid_graph = [[number_position(i, j) for j in range(i + 1)] for i in range(len(pyramid))]
+pyramid_graph = [[number_position(i, j) for j in range(i + 1)]
+                 for i in range(len(pyramid))]
 
 
 def make_road(start_i, start_j, finish_i, finish_j):
-    roads.append([pyramid_graph[start_i][start_j], pyramid_graph[finish_i][finish_j]])
+    roads.append([pyramid_graph[start_i][start_j],
+                  pyramid_graph[finish_i][finish_j]])
 
 
 def compare_add(row, r, temp_maxvalue, final_maxvalue):
@@ -72,7 +74,7 @@ for i in range(len(maxvalue)):
 
 n = gauss(len(pyramid))
 
-graph_matrix = [[0 for x in range(n+1)] for y in range(n+1)]
+graph_matrix = [[0 for x in range(n + 1)] for y in range(n + 1)]
 
 for i in range(len(roads)):
     graph_matrix[roads[i][0]][roads[i][1]] = 1
@@ -82,7 +84,8 @@ for i in range(len(roads)):
 def recursive_road_print(graph, i, j):
     print(j + 1, end='')
     if i > 1 :
-        if graph_matrix[graph[i][j]][graph[i - 1][j - 1]] and graph_matrix[graph[i][j]][graph[i - 1][j]]:
+        if (graph_matrix[graph[i][j]][graph[i - 1][j - 1]]
+            and graph_matrix[graph[i][j]][graph[i - 1][j]]):
             recursive_road_print(graph, i - 1, j - 1)
             recursive_road_print(graph, i - 1, j)
         elif graph_matrix[graph[i][j]][graph[i - 1][j]]:
@@ -119,7 +122,8 @@ def road_print(graph, i, j):
                 j -= 1
             i = -1
             continue
-        if graph_matrix[graph[i][j]][graph[i - 1][j - 1]] and graph_matrix[graph[i][j]][graph[i - 1][j]]:
+        if (graph_matrix[graph[i][j]][graph[i - 1][j - 1]]
+                and graph_matrix[graph[i][j]][graph[i - 1][j]]):
             queue.append((i, j))
             current_road += str(j + 1)
             save.append(current_road)
