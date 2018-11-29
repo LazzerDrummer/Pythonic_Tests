@@ -1,0 +1,21 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\venv",
+    "\\venv\\Lib",
+    "\\venv\\Lib\\site-packages",
+    "\\venv\\Lib\\site-packages\\pip-9.0.1-py3.6.egg",
+    "\\venv\\Lib\\site-packages\\pip-9.0.1-py3.6.egg\\pip",
+    "\\venv\\Lib\\site-packages\\pip-9.0.1-py3.6.egg\\pip\\_vendor",
+    "\\venv\\Lib\\site-packages\\pip-9.0.1-py3.6.egg\\pip\\_vendor\\html5lib",
+    "\\venv\\Lib\\site-packages\\pip-9.0.1-py3.6.egg\\pip\\_vendor\\html5lib\\treebuilders",
+    "\\venv\\Lib\\site-packages\\pip-9.0.1-py3.6.egg\\pip\\_vendor\\webencodings",
+    "\\venv\\Lib\\site-packages\\pygame",
+    "\\venv\\Lib\\site-packages\\pygame\\examples",
+    "\\venv\\Lib\\site-packages\\pygame\\tests",
+    "\\venv\\Lib\\site-packages\\pygame\\tests\\run_tests__tests",
+    "\\venv\\Lib\\site-packages\\pygame\\tests\\run_tests__tests\\all_ok",
+    "\\venv\\Lib\\site-packages\\pygame\\tests\\test_utils"
+  ],
+  "PreviewInSolutionExplorer": false
+}
