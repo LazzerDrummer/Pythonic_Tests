@@ -3,5 +3,6 @@
     "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,
     "python.linting.pep8Enabled": false,
+    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\python.exe",
     //"editor.renderIndentGuides": true
 }
